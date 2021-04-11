@@ -36,31 +36,8 @@ def save_img(code: str):
 
     response = requests.post(API_URL, json={
         'code': code,
-        "paddingVertical": "56px",
-        "paddingHorizontal": "56px",
-        "backgroundImage": None,
-        "backgroundImageSelection": None,
-        "backgroundMode": "color",
-        "backgroundColor": "rgba(171, 184, 195, 1)",
-        "dropShadow": True,
-        "dropShadowOffsetY": "20px",
-        "dropShadowBlurRadius": "68px",
-        "theme": "seti",
-        "windowTheme": "none",
         "language": "python" if maybe_python else 'auto',
-        "fontFamily": "Hack",
-        "fontSize": "14px",
-        "lineHeight": "133%",
-        "windowControls": True,
-        "widthAdjustment": True,
-        "lineNumbers": True,
-        "firstLineNumber": 1,
-        "exportSize": "2x",
-        "watermark": False,
-        "squaredImage": False,
-        "hiddenCharacters": False,
-        "name": "",
-        "width": 680})
+        "lineNumbers": True,})
     filename = gen_filename()
     with open(filename, 'wb') as new_img:
         new_img.write(response.content)
