@@ -20,6 +20,9 @@ async def on_message(msg: discord.Message):
 
     code_snippets = get_code(msg.content)[:10]
 
+    if len(code_snippets) == 0:
+        return
+
     await msg.channel.send('Pretty code loading!')
 
     for code_snippet in code_snippets:
