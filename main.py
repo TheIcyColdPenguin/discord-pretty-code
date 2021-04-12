@@ -30,8 +30,8 @@ async def on_message(msg: discord.Message):
 
     for code_snippet in code_snippets:
         filename = save_img(code_snippet)
-        await msg.channel.send(f"{msg.author}, here's your code",
-                               file=discord.File(filename))
+        await msg.reply("Here's your code",
+                        file=discord.File(filename))
         delete_img(filename)
 
 client.run(TOKEN)
