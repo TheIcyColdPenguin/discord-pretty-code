@@ -1,14 +1,11 @@
 import os
 import random
-import re
 
 import requests
 
+from helpers import CodeObj, get_language_code
+
 API_URL = 'https://carbonara.vercel.app/api/cook'
-MAYBE_PYTHON_MATCHERS = [
-    re.compile(r'^def', flags=re.MULTILINE),
-    re.compile(r'print\(')
-]
 
 
 def gen_possibly_used_filename():
@@ -26,18 +23,12 @@ def gen_filename():
             return maybe_filename
 
 
-def save_img(code: str):
-    # HACK: check if print or def in the code string
-    maybe_python = any(
-        MAYBE_PYTHON.match(code)
-        for MAYBE_PYTHON
-        in MAYBE_PYTHON_MATCHERS
-    )
+def save_img(code: CodeObj):
 
     response = requests.post(API_URL, json={
-        'code': code,
-        "language": "python" if maybe_python else 'auto',
-        "lineNumbers": True,})
+        'code': code['code'],
+        "language": get_language_code(code['language']),
+        "lineNumbers": True, })
     filename = gen_filename()
     with open(filename, 'wb') as new_img:
         new_img.write(response.content)
