@@ -18,6 +18,9 @@ async def on_message(msg: discord.Message):
     if msg.author == client.user or msg.author.bot:
         return
 
+    if not msg.content.lower().startswith('!p'):
+        return
+
     code_snippets = get_code(msg.content)[:10]
 
     if len(code_snippets) == 0:
