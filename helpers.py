@@ -1,7 +1,9 @@
 import re
 from typing import List, TypedDict
 
-CODE_BLOCK_CONTENT_FINDER = re.compile(r'```(\w*\n)?([^`]*)```')
+# INFO: The "+" in the character class matches a literal plus
+# INFO: It does not act as a metacharacter here
+CODE_BLOCK_CONTENT_FINDER = re.compile(r'```([\w+\-]*\n)?([^`]*)```')
 
 
 class CodeObj(TypedDict):
