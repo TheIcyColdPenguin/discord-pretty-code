@@ -26,6 +26,7 @@ async def on_message(msg: discord.Message):
     if len(code_snippets) == 0:
         return
 
+    await msg.add_reaction("zoomeyes:811110244721098773")
     await msg.channel.send('Pretty code loading!')
 
     for code_snippet in code_snippets:
