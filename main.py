@@ -17,6 +17,9 @@ async def on_ready():
 
 @bot.command(aliases=['p'])
 async def prettifier(ctx):
+    if ctx.author and ctx.author.bot:
+        return
+
     msg = ctx.message
     code_snippets = get_code(msg.content)[:10]
 
