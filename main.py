@@ -24,7 +24,6 @@ async def prettifier(ctx):
         return
 
     await msg.add_reaction("zoomeyes:811110244721098773")
-    await msg.channel.send('Pretty code loading!')
 
     for code_snippet in code_snippets:
         img_content = get_img(code_snippet)
