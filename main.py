@@ -1,28 +1,23 @@
 from io import BytesIO
 
 import discord
+from discord.ext import commands
 
 from config import TOKEN
 from helpers import get_code
 from scraper import get_img
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='!', case_insensitive=True)
 
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user.name} has logged in!')
+    print(f'{bot.user.name} has logged in!')
 
 
-@client.event
-async def on_message(msg: discord.Message):
-
-    if msg.author == client.user or msg.author.bot:
-        return
-
-    if not msg.content.lower().startswith('!p'):
-        return
-
+@bot.command(aliases=['p'])
+async def prettifier(ctx):
+    msg = ctx.message
     code_snippets = get_code(msg.content)[:10]
 
     if len(code_snippets) == 0:
@@ -40,4 +35,4 @@ async def on_message(msg: discord.Message):
                             filename="code.png"
                         ))
 
-client.run(TOKEN)
+bot.run(TOKEN)
