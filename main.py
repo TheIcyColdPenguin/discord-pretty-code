@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 
 from config import TOKEN
-from helpers import get_code
+from helpers import get_code, check_msg_exists
 from scraper import get_img
 
 bot = commands.Bot(command_prefix='!', case_insensitive=True)
@@ -17,7 +17,7 @@ async def on_ready():
 
 @bot.command(aliases=['p'])
 async def prettifier(ctx):
-    if ctx.author and ctx.author.bot:
+    if ctx.author.bot:
         return
 
     msg = ctx.message
@@ -31,11 +31,15 @@ async def prettifier(ctx):
 
     for code_snippet in code_snippets:
         img_content = get_img(code_snippet)
+        img_file = discord.File(
+            fp=BytesIO(img_content),
+            filename="code.png"
+        )
 
-        await msg.reply("Here's your code",
-                        file=discord.File(
-                            fp=BytesIO(img_content),
-                            filename="code.png"
-                        ))
+        if await check_msg_exists(msg):
+            await msg.reply("Here's your code",
+                            file=img_file)
+        else:
+            await msg.channel.send(f"<@{ctx.author.id}>, Here's your code", file=img_file)
 
 bot.run(TOKEN)

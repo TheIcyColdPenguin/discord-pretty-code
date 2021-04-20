@@ -1,6 +1,8 @@
 import re
 from typing import List, TypedDict
 
+import discord
+
 # INFO: The "+" in the character class matches a literal plus
 # INFO: It does not act as a metacharacter here
 CODE_BLOCK_CONTENT_FINDER = re.compile(r'```([\w+\-]*\n)?([^`]*)```')
@@ -67,3 +69,12 @@ def get_code(string: str) -> List[CodeObj]:
     )
 
     return list(filter(lambda x: bool(x['code']), all_code_snippets))
+
+
+async def check_msg_exists(msg: discord.Message):
+    msg_id = msg.id
+    try:
+        await msg.channel.fetch_message(msg_id)
+        return True
+    except discord.NotFound:
+        return False
