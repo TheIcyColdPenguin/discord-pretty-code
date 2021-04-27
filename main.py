@@ -15,6 +15,13 @@ async def on_ready():
     print(f'{bot.user.name} has logged in!')
 
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        return
+    raise error
+
+
 @bot.command(aliases=['p'])
 async def prettifier(ctx):
     if ctx.author.bot:
