@@ -5,7 +5,7 @@ import discord
 
 # INFO: The "+" in the character class matches a literal plus
 # INFO: It does not act as a metacharacter here
-CODE_BLOCK_CONTENT_FINDER = re.compile(r'```([\w+\-]*\n)?([^`]*)```')
+CODE_BLOCK_CONTENT_FINDER = re.compile(r'```([\w+\-]*\n)?([\s\S]+?(?=```))```')
 
 
 class CodeObj(TypedDict):
@@ -63,8 +63,10 @@ def get_language_code(maybe_lang: str):
 
 def get_code(string: str) -> List[CodeObj]:
     all_code_snippets = map(
-        lambda x: {'language': x[0].strip().lower()
-                   or 'auto', 'code': x[1].strip()},
+        lambda x: {
+            'language': x[0].strip().lower() or 'auto',
+            'code': x[1].strip()
+        },
         CODE_BLOCK_CONTENT_FINDER.findall(string)
     )
 
