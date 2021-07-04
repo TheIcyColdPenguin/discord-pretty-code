@@ -28,7 +28,7 @@ async def prettifier(ctx):
         return
 
     msg = ctx.message
-    code_snippets = get_code(msg.content)[:10]
+    code_snippets = get_code(msg.content)[:5]
 
     if len(code_snippets) == 0:
         return
